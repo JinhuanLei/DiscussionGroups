@@ -10,10 +10,10 @@
     <meta name="Resource-type" content="Document" />
 
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/jquery.fullPage.css" />
-    <link rel="stylesheet" type="text/css" href="../../css/examples.css" />
-    <link href="../../css/jumbotron.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../../css/cardtransisition.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="css/examples.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/cardtransisition.css" />
     <style>
 
         /* Style for our header texts
