@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html; charset=utf-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -143,9 +144,9 @@
         <div class="block col-md-4">
             <div class="card transition">
                 <h2 class="transition">Kasi' Group</h2>
-                <p> Instructor：</p>
+                <p> Instructor:</p>
                 <br />
-                <p> TimeStamps：</p>
+                <p> TimeStamps:</p>
 
                 <div class="cta-container transition">
                     <div class="row pre-scrollable" style="height:0px; padding-bottom:50%">
