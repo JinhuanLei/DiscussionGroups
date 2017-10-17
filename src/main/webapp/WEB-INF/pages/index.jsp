@@ -50,7 +50,7 @@
         #section0 {
             background-image: url(images/fp1.jpg);
         }
-
+        .RbtnMargin { margin-left: 5px; }
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -197,17 +197,15 @@
         </div>
 
     </div>
+    <br /><br /><br /><br /><br /><br /><br />
+    <button class="btn btn-primary pull-right RbtnMargin" type="button">View More Discussion</button>
 </div>
 
 <br>
 <br> <br> <br> <br> <br>
 <hr style="height:10px;border:none;border-top:10px groove skyblue;" />
 <br>
-<br>
-<br>
-<br>
-<br><br>
-<br>
+
 <br>
 <br>
 <br>
