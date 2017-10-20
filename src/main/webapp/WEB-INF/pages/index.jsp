@@ -126,7 +126,7 @@
                 </ul>
             </div>
             <div id="submitform">
-                <form class="navbar-form navbar-right" id="loginButton" action="/maintoindex">
+                <form class="navbar-form navbar-right" id="loginButton" action="/TurnToLoginPage">
 
                     <button type="submit" class="btn btn-success">Sign in</button>
 
@@ -211,7 +211,10 @@
 <br>
 <br>
 Preapared By Jinhuan Lei
+<script>
 
+
+</script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
