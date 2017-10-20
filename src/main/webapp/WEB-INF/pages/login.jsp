@@ -6,12 +6,12 @@
     <title></title>
     <link rel="stylesheet" href="css/login.css" type="text/css" />
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js";></script>;
+
     <style type="text/css">
         body {
             background: url(images/background1.JPG);
         }
-        .input-group span.error{
+        .loginmodule span.error{
             visibility:hidden;
             color:red;
             font-size:20px;
@@ -55,6 +55,7 @@
                     <h3>Login the UWL Discussion Group</h3>
 
                 </div>
+                <div class="loginmodule">
                 <form action="" class="loginForm">
                     <div class="input-group">
                         <input type="text" id="username" class="form-control" placeholder="Username">
@@ -78,11 +79,14 @@
                         <br>
                         <br>
 
-                        <input type="submit" class="form-control" value="Submit" onclick="Login()"/>
-                        <span class="error" id="Loginerror">Please enter correct username and password!</span>
-                        <span class="error" id="Typeerror">Please choose the usertype</span>
+
                     </div>
                 </form>
+                    <input type="submit" class="btn btn-primary form-control submitbut" value="Submit" onclick="Login()"/>
+                    <span class="error" id="Loginerror">Please enter correct username and password!</span>
+                    <span class="error" id="Typeerror">Please choose the usertype</span>
+                </div>
+
             </div>
         </div>
         <div class="col-md-4">
@@ -102,13 +106,15 @@
     </div>
 </div>
 
-
-<script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js";></script>;
+<script type="text/javascript">
 function Login()
 {
     var username =document.getElementById("username").value;
     var password =document.getElementById("password").value;
     var usertype=$("#usertype").val();
+
+
     $.ajax(
         {
             type: "POST" ,
@@ -119,13 +125,13 @@ function Login()
             {
                //alert(data+(data=="-1"));
                console.log("value:"+data);
-                alert(data);
+               // alert("ajaxsuccess");
                 if(data=="-1")
                 {
                    // alert("没变色");
                     var error = document.getElementById("Loginerror");
                     error.style.visibility="visible";
-//                    return;
+                    return;
                 }
 
                 else
@@ -133,7 +139,13 @@ function Login()
                     //alert("tiao");
                     window.location.href="/TurnToMainPage";
                 }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
             }
+
         }
     );
 

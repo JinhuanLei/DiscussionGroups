@@ -39,8 +39,9 @@ public class UserController {
         return new ModelAndView("index");
 
     }
-    @RequestMapping(value = "/loginFunction",method = RequestMethod.POST)
-    public void login(HttpSession hs, String username, String password,String usertype ,PrintWriter pw)
+
+    @RequestMapping(value = "/loginFunction")
+    public void userLogin(HttpSession hs, String username, String password,String usertype ,PrintWriter pw)
     {
          //System.out.println("submit"+username+password);
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
@@ -49,28 +50,31 @@ public class UserController {
         System.out.println(username);
         account a=mapper.getByUsername(username);
 //        System.out.println(a.getPassword());
-//        System.out.println(password);
+        System.out.println(password);
 //        System.out.println(a.getPassword().equals(password));
         System.out.println("usertype:"+ditinguishType(usertype) +usertype);
 
        System.out.println(a!=null&&a.getPassword().equals(password)&&a.getType()==ditinguishType(usertype));
+//        sqlSession.close();
         if(a!=null&&a.getPassword().equals(password)&&a.getType()==ditinguishType(usertype))     //a.getPassword()==password     wrong??
         {
 
                 String x = "0";
                 hs.setAttribute("username", username);
                 hs.setAttribute("usertype", a.getType());
-            System.out.println("成功");
+            System.out.println("login成功");
                 pw.write(x);
         }
         else
         {
             String x="-1";
+            System.out.println("失败");
             pw.write(x);
             //System.out.println("Please enter correct username and password");
         }
 
-        sqlSession.close();
+
+
     }
 
     @RequestMapping(value = "/logoutFuntion")

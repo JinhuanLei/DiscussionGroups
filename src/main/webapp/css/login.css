@@ -45,8 +45,8 @@ a:hover { text-decoration: none }
 .loginForm input[type=text], .loginForm input[type=password]{
 	margin-bottom:10px;
 }
-.loginForm input[type=submit]{
-	background:#fb044a;
+.loginmodule submitbut{
+	background:#fb044a ;
 	color:#fff;
 	font-weight:700;
 	
