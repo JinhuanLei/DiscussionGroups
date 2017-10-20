@@ -212,7 +212,26 @@
 <br>
 Preapared By Jinhuan Lei
 <script>
+    $(function() {
+        var username="<%=session.getAttribute("username")%>";
+        var type="<%=session.getAttribute("usertype")%>";   //判断是否是admin 管理员 或user
+        var navbar=document.getElementById("downbar");
+        var loginbutton=document.getElementById("submitform");
+        console.log("username"+username+(username!="null"));
+//        if(username!="")   //exist
+        if (username!="null")
+        {
+            navbar.style.display="block";
+            loginbutton.style.display="none";
+        }
+        else
+        {
 
+            navbar.style.display="none";
+            loginbutton.style.display="block";
+        }
+
+    });
 
 </script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

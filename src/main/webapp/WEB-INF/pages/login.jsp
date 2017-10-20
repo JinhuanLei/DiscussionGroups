@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html; charset=utf-8"%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -38,32 +39,10 @@
         <div id="navbar" class="navbar-collapse collapse">
             <div id="downbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <!--<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a id="action-1" href="#">Manager</a>
-                            </li>
 
-                            <li>
-                                <a href="#">Setting</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="/logoutFuntion">Log Out</a>
-                            </li>
-
-                        </ul>
-                    </li>-->
                 </ul>
             </div>
-            <!--<div id="submitform">
-                <form class="navbar-form navbar-right" id="loginButton" action="/maintoindex">
 
-                    <button type="submit" class="btn btn-success">Sign in</button>
-
-                </form>
-            </div>-->
         </div>
 
     </div>
@@ -78,29 +57,28 @@
                 </div>
                 <form action="" class="loginForm">
                     <div class="input-group">
-                        <input type="text" id="name" class="form-control" placeholder="Username">
-                        <input type="password" id="paw" class="form-control" placeholder="Password">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">User Type</button>
+                        <input type="text" id="username" class="form-control" placeholder="Username">
+                        <input type="password" id="password" class="form-control" placeholder="Password">
 
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">切换下拉菜单</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
+                        <div class="form-group">
+                            <label class="control-label col-lg-4">Select User Type</label>
 
-                                <li><a href="#">Beginners</a></li>
-                                <li><a href="#">Intermediate User</a></li>
-                                <li><a href="#">Expert User</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Instructor</a></li>
-                            </ul>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="usertype">
+                                    <option></option>
+                                    <option>Beginners</option>
+                                    <option>Intermediate User</option>
+                                    <option>Expert User</option>
+                                    <option>Instructor</option>
+
+                                </select>
+                            </div>
+
                         </div>
-
                         <br>
                         <br>
 
-                        <input type="submit" id="submit" class="form-control" value="Submit" onclick="Login()">
+                        <input type="submit" class="form-control" value="Submit" onclick="Login()"/>
                         <span class="error" id="Loginerror">Please enter correct username and password!</span>
                         <span class="error" id="Typeerror">Please choose the usertype</span>
                     </div>
@@ -126,7 +104,40 @@
 
 
 <script>
+function Login()
+{
+    var username =document.getElementById("username").value;
+    var password =document.getElementById("password").value;
+    var usertype=$("#usertype").val();
+    $.ajax(
+        {
+            type: "POST" ,
+            url: "/loginFunction" ,
+            data: "username=" +username+"&password=" +password+"&usertype="+usertype ,
+            dataType: "text" ,
+            success: function (data)
+            {
+               //alert(data+(data=="-1"));
+               console.log("value:"+data);
+                alert(data);
+                if(data=="-1")
+                {
+                   // alert("没变色");
+                    var error = document.getElementById("Loginerror");
+                    error.style.visibility="visible";
+//                    return;
+                }
 
+                else
+                {
+                    //alert("tiao");
+                    window.location.href="/TurnToMainPage";
+                }
+            }
+        }
+    );
+
+}
 </script>
 <script>
     $(document).ready(function(){
