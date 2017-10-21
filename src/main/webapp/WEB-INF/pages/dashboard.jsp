@@ -207,7 +207,7 @@
                     <span class="link-title">Tables</span>
                 </a>
             </li>
-
+        </ul>
             <!-- /#menu -->
     </div>
     <!-- /#left -->

@@ -1,16 +1,20 @@
 package controller;
 
 import domain.account;
+import domain.discussion;
 import mapping.AccountMapperI;
+import mapping.DiscussionMapperI;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import util.MyBatisUtil;
 
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Created by dzkan on 2016/3/8.
@@ -40,6 +44,25 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "/LoadDiscussionData")
+
+    public @ResponseBody
+    List<discussion> loadDiscussionData() {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+        DiscussionMapperI mapper = sqlSession.getMapper(DiscussionMapperI.class);
+        // return "/WEB-INF/index.jsp";
+        //service ser = mapper.getServiceByID(1);
+        List<discussion> ser=mapper.getAllDiscussions();
+//        List<discussion> list=ser.
+        //System.out.println(ser);
+        sqlSession.close();
+        return ser;
+        //        return str;
+
+    }
+
+
     @RequestMapping(value = "/loginFunction")
     public void userLogin(HttpSession hs, String username, String password,String usertype ,PrintWriter pw)
     {
@@ -62,6 +85,7 @@ public class UserController {
                 String x = "0";
                 hs.setAttribute("username", username);
                 hs.setAttribute("usertype", a.getType());
+//                hs.setAttribute("type",usertype);
             System.out.println("login成功");
                 pw.write(x);
         }
