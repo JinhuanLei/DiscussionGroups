@@ -14,6 +14,7 @@ import util.MyBatisUtil;
 
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,11 +55,16 @@ public class UserController {
         // return "/WEB-INF/index.jsp";
         //service ser = mapper.getServiceByID(1);
         List<discussion> ser=mapper.getAllDiscussions();
-//        List<discussion> list=ser.
-        //System.out.println(ser);
+        int length=mapper.getAcountFromDiscussion();
+        List<discussion> list = new ArrayList<discussion>(){{
+            add(ser.get(length-1));
+            add(ser.get(length-2));
+            add(ser.get(length-3));
+        }};
+
         sqlSession.close();
-        return ser;
-        //        return str;
+        return list;
+
 
     }
 
@@ -84,8 +90,8 @@ public class UserController {
 
                 String x = "0";
                 hs.setAttribute("username", username);
-                hs.setAttribute("usertype", a.getType());
-//                hs.setAttribute("type",usertype);
+                hs.setAttribute("usertype", a.getType());   //num
+                hs.setAttribute("usertypename",usertype);  //
             System.out.println("login成功");
                 pw.write(x);
         }

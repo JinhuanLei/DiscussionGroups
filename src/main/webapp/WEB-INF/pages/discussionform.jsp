@@ -8,7 +8,7 @@
     <!--Mobile first-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Table</title>
+    <title>Form Validation</title>
 
     <meta name="description" content="Free Admin Template Based On Twitter Bootstrap 3.x">
     <meta name="author" content="">
@@ -18,6 +18,8 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css">
+
+
 
     <!-- Metis core stylesheet -->
     <link rel="stylesheet" href="assets/css/main.css">
@@ -31,28 +33,11 @@
     <!-- animate.css stylesheet -->
     <link rel="stylesheet" href="assets/lib/animate.css/animate.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css">
-    <style>
 
-        @font-face {
-            font-family: 'iconfont';  /* project id 444600 */
-            src: url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.eot');
-            src: url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.eot?#iefix') format('embedded-opentype'),
-            url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.woff') format('woff'),
-            url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.ttf') format('truetype'),
-            url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.svg#iconfont') format('svg');
-        }
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css">
 
-        .iconfont {
-            font-family: "iconfont";
-            font-size: 16px;
-            font-style: normal;
-            -webkit-font-smoothing: antialiased;
-            -webkit-text-stroke-width: 0.2px;
-            -moz-osx-font-smoothing: grayscale;
-            padding-left: 0
-        }
-    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -71,7 +56,26 @@
     <link rel="stylesheet" href="assets/css/style-switcher.css">
     <link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.js"></script>
+    <style>
+        @font-face {
+            font-family: 'iconfont';  /* project id 444600 */
+            src: url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.eot');
+            src: url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.woff') format('woff'),
+            url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.svg#iconfont') format('svg');
+        }
 
+        .iconfont {
+            font-family: "iconfont";
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
+            padding-left: 0;
+        }
+    </style>
 </head>
 
 <body class="  ">
@@ -104,10 +108,10 @@
 
                 </div>
 
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <!--<div class="collapse navbar-collapse navbar-ex1-collapse">
 
-                    <!-- .nav -->
-                    <!--<ul class="nav navbar-nav">
+
+                    <ul class="nav navbar-nav">
                         <li>
                             <a href="dashboard.html">Dashboard</a>
                         </li>
@@ -115,9 +119,9 @@
                             <a href="#">Tables</a>
                         </li>
 
-                    </ul>-->
-                    <!-- /.nav -->
-                </div>
+                    </ul>
+
+                </div>-->
             </div>
             <!-- /.container-fluid -->
         </nav>
@@ -136,12 +140,12 @@
                 </form>
 
             </div>-->
-            <!-- /.search-bar -->
+
             <!--<div class="main-bar">
-                <h3>
-                    <i class="fa fa-table"></i>&nbsp;
-                    Table
-                </h3>
+                <h4>
+                   &nbsp;
+                    Create Discussion Group
+                </h4>
             </div>-->
             <!-- /.main-bar -->
         </header>
@@ -197,59 +201,90 @@
     <div id="content">
         <div class="outer">
             <div class="inner bg-light lter">
-                <!--Begin Datatables-->
+                <style>
+                    .form-control.col-lg-6 {
+                        width: 50% !important;
+                    }
+                </style>
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="box">
                             <header>
-                                <div class="icons"><i class="fa fa-table"></i></div>
-                                <h5>Dynamic Table</h5>
+                                <div class="icons"><i class="fa fa-th-large"></i></div>
+                                <h5>Create Discussion</h5>
+                                <!-- .toolbar -->
+                                <div class="toolbar">
+                                    <nav style="padding: 8px;">
+                                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                                            <i class="fa fa-expand"></i>
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </nav>
+                                </div>            <!-- /.toolbar -->
+
                             </header>
-                            <div id="collapse4" class="body">
-                                <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th ><i class="iconfont">&#xe607;</i></th>
-                                        <th >Discussion Group</th>
-                                        <th>Instructor</th>
-                                        <th>Topic</th>
-                                        <th>Timestamp</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            <a class="btn btn-default"><i class="iconfont">&#xe624;</i></a>
-                                            <a class="btn btn-danger"><i class="iconfont">&#xe600;</i></a>
-                                        </td>
-                                        <td class="hidden-xs">1</td>
-                                        <td>John Doe</td>
-                                        <td>Science</td>
-                                        <td>2017</td>
-                                    </tr>
-                                    </tbody>
-                                    </tbody>
-                                </table>
+                            <div id="collapseOne" class="body">
+                                <br /><br /><br />
+                                <form action="#" class="form-horizontal" id="block-validate">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Discussion Name</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" id="required1" name="required1" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4">Topic</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" id="required2" name="required2" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="form-group">
+                                        <label class="control-label col-lg-4">Digits Only</label>
+
+                                        <div class="col-lg-4">
+                                            <input type="text" id="digits" name="digits" class="form-control">
+                                        </div>
+                                    </div>-->
+
+
+                                    <br /><br /><br /><br /><br />
+                                    <div class="form-actions no-margin-bottom">
+                                        <input type="submit" value="Submit" class="btn btn-primary">
+                                    </div>
+                                    <br /><br /><br />
+                                </form>
                             </div>
                         </div>
                     </div>
+                    <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
 
 
+
+
             </div>
-            <!-- /#content -->
-
-
-            <!-- /#right -->
+            <!-- /.inner -->
         </div>
-        <!-- /#wrap -->
+        <!-- /.outer -->
     </div>
+    <!-- /#content -->
+
+
 </div>
+<!-- /#wrap -->
+
 <footer class="Footer bg-dark dker">
     <p>2017 &copy; UWL Discussion Group</p>
 </footer>
-
 <!-- /#footer -->
 <!-- #helpModal -->
 <div id="helpModal" class="modal fade">
@@ -261,7 +296,11 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
                 </p>
             </div>
             <div class="modal-footer">
@@ -277,20 +316,22 @@
 <!--jQuery -->
 <script src="assets/lib/jquery/jquery.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.26.6/js/jquery.tablesorter.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/jquery.validationEngine.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/languages/jquery.validationEngine-en.min.js"></script>
 
 <!--Bootstrap -->
 <script src="assets/lib/bootstrap/js/bootstrap.js"></script>
 <!-- MetisMenu -->
 <script src="assets/lib/metismenu/metisMenu.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.3/jquery.tagsinput.min.js"></script>
 <!-- onoffcanvas -->
 <script src="assets/lib/onoffcanvas/onoffcanvas.js"></script>
 <!-- Screenfull -->
 <script src="assets/lib/screenfull/screenfull.js"></script>
+
+<script src="assets/lib/jquery-validation/jquery.validate.js"></script>
 
 <!-- Metis core scripts -->
 <script src="assets/js/core.js"></script>
@@ -299,9 +340,7 @@
 
 <script>
     $(function() {
-        Metis.MetisTable();
-        Metis.metisSortable();
-
+        Metis.formValidation();
         var username="<%=session.getAttribute("username")%>";
         var usertype="<%=session.getAttribute("usertypename")%>";
         var eleH=$("#inferarea h5");
@@ -309,6 +348,7 @@
         var eleL=$("#inferarea li");
         eleH[0].innerHTML="&nbsp;&nbsp;"+username;
         eleL[1].innerHTML="&nbsp;&nbsp;"+usertype;
+
     });
 </script>
 

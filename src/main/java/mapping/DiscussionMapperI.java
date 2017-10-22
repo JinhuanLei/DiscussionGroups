@@ -13,5 +13,9 @@ public interface DiscussionMapperI {
     @Select("select * from discussion")
     public List<discussion> getAllDiscussions();
 
+@Select("select count(*) from discussion")
+    public int getAcountFromDiscussion();
+
+
 
 }

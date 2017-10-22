@@ -14,4 +14,16 @@ public class InstructorController {
     {
  return new ModelAndView("dashboard");
    }
+
+    @RequestMapping(value = "/LoadInstructorsData",method = RequestMethod.GET)
+    public ModelAndView loadInstructorsData()
+    {
+        return new ModelAndView("index");
+    }
+
+    @RequestMapping(value = "/TurnToCreatePage",method = RequestMethod.GET)
+    public ModelAndView turnToCreatePage()
+    {
+        return new ModelAndView("discussionform");
+    }
 }
