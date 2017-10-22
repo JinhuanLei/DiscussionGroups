@@ -13,6 +13,10 @@ public interface DiscussionMapperI {
     @Select("select * from discussion")
     public List<discussion> getAllDiscussions();
 
+    @Select("select * from discussion where instructor=#{instructor}")
+    public List<discussion> getDiscussionsByInstructor(String instructor);
+
+
 @Select("select count(*) from discussion")
     public int getAcountFromDiscussion();
 

@@ -1,4 +1,5 @@
 <!doctype html>
+<%@ page contentType="text/html; charset=utf-8"%>
 <html>
 
 <head>
@@ -156,7 +157,6 @@
             <div class="user-wrapper bg-dark">
                 <a class="user-link" href="">
                     <img class="media-object img-thumbnail user-img" alt="User Picture" src="http://lorempixel.com/64/64">
-
                 </a>
 
                 <div class="media-body" id="inferarea">
@@ -216,17 +216,17 @@
                                         <th>Timestamp</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            <a class="btn btn-default"><i class="iconfont">&#xe624;</i></a>
-                                            <a class="btn btn-danger"><i class="iconfont">&#xe600;</i></a>
-                                        </td>
-                                        <td class="hidden-xs">1</td>
-                                        <td>John Doe</td>
-                                        <td>Science</td>
-                                        <td>2017</td>
-                                    </tr>
+                                    <tbody id="discussionTable">
+                                    <%--<tr>--%>
+                                        <%--<td align="center">--%>
+                                            <%--<a class="btn btn-default"><i class="iconfont">&#xe624;</i></a>--%>
+                                            <%--<a class="btn btn-danger"><i class="iconfont">&#xe600;</i></a>--%>
+                                        <%--</td>--%>
+                                        <%--<td class="hidden-xs">1</td>--%>
+                                        <%--<td>John Doe</td>--%>
+                                        <%--<td>Science</td>--%>
+                                        <%--<td>2017</td>--%>
+                                    <%--</tr>--%>
                                     </tbody>
                                     </tbody>
                                 </table>
@@ -299,8 +299,7 @@
 
 <script>
     $(function() {
-        Metis.MetisTable();
-        Metis.metisSortable();
+
 
         var username="<%=session.getAttribute("username")%>";
         var usertype="<%=session.getAttribute("usertypename")%>";
@@ -309,6 +308,90 @@
         var eleL=$("#inferarea li");
         eleH[0].innerHTML="&nbsp;&nbsp;"+username;
         eleL[1].innerHTML="&nbsp;&nbsp;"+usertype;
+
+        $.ajax(
+            {
+                type: "POST",
+                url: "/GetAllDiscussionByInstructor",
+                data: "username=" + username,
+                success: function (data) {
+
+                    var count = Object.keys(data).length;  //传过来数据长度
+                    console.log("数据长度:  " + count);
+                    for (var x = 0; x < count; x++) {
+                        var row = document.createElement("tr"); //创建行
+
+                        for (var y = 0; y < 5; y++) {
+                            if (y == 0) {
+                                var td1 = document.createElement("td"); //创建单元格
+                                td1.align="center";
+                                 var a1= document.createElement("a");
+                                var i1= document.createElement("i");
+                                var a2= document.createElement("a");
+                                var i2= document.createElement("i");
+
+                                 a1.className='btn btn-default';
+                                a2.className='btn btn-danger';
+                                i1.className='iconfont';
+                                i2.className='iconfont';
+                                a1.appendChild(i1);
+                                a2.appendChild(i2);
+                               // i1.appendChild(document.createTextNode("&#xe624;"));
+                                i1.innerHTML="&#xe624";
+                                i2.innerHTML="&#xe600";
+
+                                //i2.appendChild(document.createTextNode("&#xe600;"));
+//                                $("#discussionTable").trigger("create");//为单元格添加内容
+//                                var a1=' <a class="btn btn-default"><i class="iconfont">&#xe624;</i></a>';
+//                                var a2='<a class="btn btn-dange"><i class="iconfont">&#xe600;</i></a>';
+
+                                td1.appendChild(a1);
+                                td1.append(" ");
+                                td1.appendChild(a2);
+
+                                row.appendChild(td1); //将单元格添加到行内
+
+                            }
+                            else if (y == 1) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].discussionname)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 2) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].instructor)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 3) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].topic)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 4) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].date)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+
+                        }
+                        document.getElementById("discussionTable").append(row); //将行添加到<tbody>中
+                    }
+                    Metis.MetisTable();
+                    Metis.metisSortable();
+                }
+            })
+
+
+//        $("#discussionTable").trigger("create");
+
     });
 </script>
 
