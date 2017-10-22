@@ -34,10 +34,19 @@ public class UserController {
     @RequestMapping(value = "/TurnToLoginPage", method = RequestMethod.GET)
     public ModelAndView turnToLoginPage()
     {
-       return new ModelAndView("login");
+        return new ModelAndView("login");
 //        return "mainInterfaceJsp";
 //        return "/index.jsp";
     }
+
+    @RequestMapping(value = "/TurnToDiscussionPage", method = RequestMethod.GET)
+    public ModelAndView turnToDiscussionPage()
+    {
+        return new ModelAndView("discussionpage");
+//        return "mainInterfaceJsp";
+//        return "/index.jsp";
+    }
+
     @RequestMapping(value = "/TurnToMainPage", method = RequestMethod.GET)
     public ModelAndView turnToMainPage()
     {

@@ -45,7 +45,7 @@ body {   font-family: Helvetica, san-serif;
 
 /*.block .card:hover p { margin-top: 300px }*/
 .block .card_circle {
-    background: url('http://lorempixel.com/400/200') no-repeat center bottom;
+    background: url('http://lorempixel.com/400/200/nature') no-repeat center bottom;
     background-color: #3487f7;
     background-size: cover;
     border-radius: 50%;
@@ -64,7 +64,7 @@ body {   font-family: Helvetica, san-serif;
     position: absolute;
     text-align: center;
     width: 100%;
-    z-index: 9999;
+    z-index: 1;
 }
 .block p {
     color: rgba(0,0,0,.6);

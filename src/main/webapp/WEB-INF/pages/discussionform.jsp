@@ -13,12 +13,14 @@
     <meta name="description" content="Free Admin Template Based On Twitter Bootstrap 3.x">
     <meta name="author" content="">
 
-    <meta name="msapplication-TileColor" content="#5bc0de" />
-    <meta name="msapplication-TileImage" content="assets/img/metis-tile.png" />
+    <meta name="msapplication-TileColor" content="#5bc0de"/>
+    <meta name="msapplication-TileImage" content="assets/img/metis-tile.png"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css">
 
+
+    <link href="build/toastr.css" rel="stylesheet"/>
 
 
     <!-- Metis core stylesheet -->
@@ -36,7 +38,8 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.theme.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,6 +78,8 @@
             -moz-osx-font-smoothing: grayscale;
             padding-left: 0;
         }
+
+
     </style>
 </head>
 
@@ -90,7 +95,8 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <header class="navbar-header">
 
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-ex1-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -101,7 +107,8 @@
 
                 <div class="topnav">
                     <div class="btn-group">
-                        <a href="/TurnToMainPage" data-toggle="tooltip" data-original-title="Exit" data-placement="bottom" class="btn btn-metis-1 btn-sm">
+                        <a href="/TurnToMainPage" data-toggle="tooltip" data-original-title="Exit"
+                           data-placement="bottom" class="btn btn-metis-1 btn-sm">
                             <i class="iconfont">&#xe673;</i>
                         </a>
                     </div>
@@ -159,14 +166,15 @@
             </div>
             <div class="user-wrapper bg-dark">
                 <a class="user-link" href="">
-                    <img class="media-object img-thumbnail user-img" alt="User Picture" src="http://lorempixel.com/64/64">
+                    <img class="media-object img-thumbnail user-img" alt="User Picture"
+                         src="http://lorempixel.com/64/64">
 
                 </a>
 
                 <div class="media-body" id="inferarea">
                     <h5 class="media-heading">&nbsp;&nbsp;Archie</h5>
                     <ul class="list-unstyled user-info">
-                        <li> <br>
+                        <li><br>
                             <small><i class="fa fa-calendar"></i></small>
                         </li>
                         <li>
@@ -230,19 +238,19 @@
 
                             </header>
                             <div id="collapseOne" class="body">
-                                <br /><br /><br />
+                                <br/><br/><br/>
                                 <form action="#" class="form-horizontal" id="block-validate">
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-4">Discussion Name</label>
                                         <div class="col-lg-4">
-                                            <input type="text" id="required1" name="required1" class="form-control">
+                                            <input type="text" id="discussionname" name="required1" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4">Topic</label>
                                         <div class="col-lg-4">
-                                            <input type="text" id="required2" name="required2" class="form-control">
+                                            <input type="text" id="topic" name="required2" class="form-control">
                                         </div>
                                     </div>
 
@@ -255,24 +263,20 @@
                                     </div>-->
 
 
-                                    <br /><br /><br /><br /><br />
+                                    <br/><br/><br/><br/><br/>
                                     <div class="form-actions no-margin-bottom">
-                                        <input type="submit" value="Submit" class="btn btn-primary">
+
                                     </div>
-                                    <br /><br /><br />
+                                    <br/><br/><br/>
+
                                 </form>
+                                <input type="submit" value="Submit" class="btn btn-primary"
+                                       onclick="addDiscussion()">
                             </div>
                         </div>
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
-
-
-
-
             </div>
-            <!-- /.inner -->
         </div>
         <!-- /.outer -->
     </div>
@@ -337,22 +341,52 @@
 <script src="assets/js/core.js"></script>
 <!-- Metis demo scripts -->
 <script src="assets/js/app.js"></script>
+<script src="build/toastr.min.js"></script>
 
 <script>
-    $(function() {
-        Metis.formValidation();
-        var username="<%=session.getAttribute("username")%>";
-        var usertype="<%=session.getAttribute("usertypename")%>";
-        var eleH=$("#inferarea h5");
+    toastr.options.positionClass = 'toast-top-center';
 
-        var eleL=$("#inferarea li");
-        eleH[0].innerHTML="&nbsp;&nbsp;"+username;
-        eleL[1].innerHTML="&nbsp;&nbsp;"+usertype;
+    function addDiscussion() {
+        var discussionname =document.getElementById("discussionname").value;
+        var topic =document.getElementById("topic").value;
+        var username = "<%=session.getAttribute("username")%>";
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/CreateDiscussion" ,
+                data: "discussionname=" +discussionname+"&topic=" +topic+"&username="+username ,
+                dataType: "text" ,
+                success: function (data)
+                {
+
+                    toastr.success('Add Success');
+                    setTimeout(function(){window.location.href="/TurnToManagePage";},2000);
+
+                }
+            })
+
+
+
+    }
+</script>
+<script>
+    $(function () {
+        Metis.formValidation();
+
+        var username = "<%=session.getAttribute("username")%>";
+        var usertype = "<%=session.getAttribute("usertypename")%>";
+        var eleH = $("#inferarea h5");
+
+        var eleL = $("#inferarea li");
+        eleH[0].innerHTML = "&nbsp;&nbsp;" + username;
+        eleL[1].innerHTML = "&nbsp;&nbsp;" + usertype;
 
     });
+
 </script>
 
 <script src="assets/js/style-switcher.js"></script>
+　
 </body>
 
 </html>

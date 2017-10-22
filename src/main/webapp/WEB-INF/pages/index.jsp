@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/examples.css" />
     <%--<link href="/css/jumbotron.css" rel="stylesheet">--%>
     <link rel="stylesheet" type="text/css" href="css/cardtransisition.css" />
+    <link rel="stylesheet" type="text/css" href="css/userinfer.css" />
     <style>
         /* Style for our header texts
 * --------------------------------------- */
@@ -86,7 +87,7 @@
             <h1>Join Our Group</h1>
             <p>Discussion Group for Machine Learning (20++ members)</p>
             <br />
-            <button type="button" class="btn btn-warning">View The Details</button>
+            <button type="button" class="btn btn-warning" onclick="{location.href='/TurnToDiscussionPage'}">View The Details</button>
         </div>
     </div>
 
@@ -122,7 +123,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Setting</a>
+                                <a href="#" data-toggle="modal" data-target="#userinfer-modal">Account Information</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -144,7 +145,35 @@
 
     </div>
 </nav>
+<div class="modal fade" id="userinfer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                <img class="img-circle" id="img_logo" src="http://lorempixel.com/84/84" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </div>
 
+            <!-- Begin # DIV Form -->
+            <div id="div-forms" class="accountinferdiv">
+
+                <strong><h2>Account Information</h2></strong>
+                <label>Username:</label>
+                <p>MiaoMiao</p>
+
+                <label>Usertype:</label>
+                <p>StudentTYPE</p>
+
+                <label>Course:</label>
+                <p>Sciecne</p>
+
+            </div>
+            <!-- End # DIV Form -->
+
+        </div>
+    </div>
+</div>
 <div class="container">
 
     <div class="row">
@@ -273,17 +302,15 @@ Preapared By Jinhuan Lei
                 }
             })
 
-
-
-
-
-
-
         var username="<%=session.getAttribute("username")%>";
         var type="<%=session.getAttribute("usertype")%>";   //判断是否是admin 管理员 或user
+        var typename="<%=session.getAttribute("usertypename")%>";
         var navbar=document.getElementById("downbar");
         var loginbutton=document.getElementById("submitform");
         var manageAutho=document.getElementById("manageli");
+        var elePa=$(".accountinferdiv p");
+
+
         var li3=document.getElementById("li3");
         var li4=document.getElementById("li4");
         var li5=document.getElementById("li5");
@@ -303,6 +330,8 @@ Preapared By Jinhuan Lei
             presentType.style.display="block";
             navbar.style.display="block";
             loginbutton.style.display="none";
+            elePa[0].innerHTML=username;
+            elePa[1].innerHTML=typename;
         }
         else
         {
