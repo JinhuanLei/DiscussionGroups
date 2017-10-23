@@ -47,7 +47,7 @@ public class InstructorController {
 public String getCurrentDate()
 {
     Locale.setDefault(Locale.ENGLISH);
-    SimpleDateFormat df1 = new SimpleDateFormat("MMMM dd,yyyy");//设置日期格式
+    SimpleDateFormat df1 = new SimpleDateFormat("MMM dd,yyyy");//设置日期格式
 
     SimpleDateFormat df2 = new SimpleDateFormat("HH:mm:ss a");
     String str1=df1.format(new Date());

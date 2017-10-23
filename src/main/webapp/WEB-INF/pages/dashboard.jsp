@@ -34,14 +34,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css">
     <style>
-
         @font-face {
             font-family: 'iconfont';  /* project id 444600 */
-            src: url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.eot');
-            src: url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.eot?#iefix') format('embedded-opentype'),
-            url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.woff') format('woff'),
-            url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.ttf') format('truetype'),
-            url('//at.alicdn.com/t/font_444600_wz7r3bjtumnm6lxr.svg#iconfont') format('svg');
+            src: url('//at.alicdn.com/t/font_444600_mot3jg1520t9ms4i.eot');
+            src: url('//at.alicdn.com/t/font_444600_mot3jg1520t9ms4i.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_444600_mot3jg1520t9ms4i.woff') format('woff'),
+            url('//at.alicdn.com/t/font_444600_mot3jg1520t9ms4i.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_444600_mot3jg1520t9ms4i.svg#iconfont') format('svg');
         }
 
         .iconfont {
@@ -329,7 +328,8 @@
                                 var i1= document.createElement("i");
                                 var a2= document.createElement("a");
                                 var i2= document.createElement("i");
-
+                                 a1.title="Terminate";
+                                a2.title="Delete";
                                  a1.className='btn btn-default';
                                 a2.className='btn btn-danger';
                                 i1.className='iconfont';
@@ -337,7 +337,7 @@
                                 a1.appendChild(i1);
                                 a2.appendChild(i2);
                                // i1.appendChild(document.createTextNode("&#xe624;"));
-                                i1.innerHTML="&#xe624";
+                                i1.innerHTML="&#xe6e1";
                                 i2.innerHTML="&#xe600";
 
                                 //i2.appendChild(document.createTextNode("&#xe600;"));
@@ -390,7 +390,7 @@
             })
 
 
-//        $("#discussionTable").trigger("create");
+
 
     });
 </script>

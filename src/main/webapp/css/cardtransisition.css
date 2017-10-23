@@ -43,6 +43,10 @@ body {   font-family: Helvetica, san-serif;
 }
 .block .card:hover h2 small { color: #fff }
 
+.block .card:hover a  {
+    color: black !important;
+}
+
 /*.block .card:hover p { margin-top: 300px }*/
 .block .card_circle {
     background: url('http://lorempixel.com/400/200/nature') no-repeat center bottom;
@@ -66,6 +70,8 @@ body {   font-family: Helvetica, san-serif;
     width: 100%;
     z-index: 1;
 }
+
+
 .block p {
     color: rgba(0,0,0,.6);
     font-family: 'Raleway', sans-serif;

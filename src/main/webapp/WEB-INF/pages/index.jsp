@@ -32,6 +32,7 @@
         }
 
         .intro p {
+
             color: #444;
         }
         /* Centered texts in each section
@@ -42,6 +43,10 @@
         }
         /* Bottom menu
 * --------------------------------------- */
+        .modal P{
+            color: black;
+            font-size: 1em;
+        }
 
         #infoMenu li a {
             color: #444;
@@ -123,7 +128,7 @@
                             </li>
 
                             <li>
-                                <a href="#" data-toggle="modal" data-target="#userinfer-modal">Account Information</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal">Account Information</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -145,35 +150,44 @@
 
     </div>
 </nav>
-<div class="modal fade" id="userinfer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" align="center">
-                <img class="img-circle" id="img_logo" src="http://lorempixel.com/84/84" />
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </button>
+                <h4 class="modal-title" id="myModalLabel">More About Yourself</h4>
             </div>
-
-            <!-- Begin # DIV Form -->
-            <div id="div-forms" class="accountinferdiv">
-
-                <strong><h2>Account Information</h2></strong>
-                <label>Username:</label>
-                <p>MiaoMiao</p>
-
-                <label>Usertype:</label>
-                <p>StudentTYPE</p>
-
-                <label>Course:</label>
-                <p>Sciecne</p>
-
+            <div class="modal-body">
+                <center>
+                    <img src="http://lorempixel.com/140/140" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
+                    <h3 class="media-heading">Joe Sixpack <small>USA</small></h3>
+                    <span><strong>Skills: </strong></span>
+                    <span class="label label-warning">HTML5/CSS</span>
+                    <span class="label label-info">Adobe CS 5.5</span>
+                    <span class="label label-info">Microsoft Office</span>
+                    <span class="label label-success">Windows XP, Vista, 7</span>
+                </center>
+                <hr>
+                <center>
+                    <p class="text-left"><strong>Bio: </strong><br>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sem dui, tempor sit amet commodo a, vulputate vel tellus.</p>
+                    <br>
+                </center>
             </div>
-            <!-- End # DIV Form -->
-
+            <div class="modal-footer">
+                <center>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">I've heard enough about myself</button>
+                </center>
+            </div>
         </div>
     </div>
 </div>
+
+
 <div class="container">
 
     <div class="row">
@@ -181,7 +195,7 @@
         <div class="block col-md-4" id="groupname1">
             <div class="card transition" id="discussion1">
 
-                <h2 class="transition" >Kasi' Group</h2>
+                <h2 class="transition" ></h2>
                 <p> Instructor:</p>
                 <br />
                 <p> TimeStamps:</p>
@@ -208,7 +222,7 @@
 
         <div class="block col-md-4" id="groupname2">
             <div class="card transition" id="discussion2">
-                <h2 class="transition" >Kasi' Group</h2>
+                <h2 class="transition" ></h2>
                 <p> Instructor:</p>
                 <br />
                 <p> TimeStamps:</p>
@@ -235,7 +249,7 @@
 
         <div class="block col-md-4" id="groupname3">
             <div class="card transition" id="discussion3">
-                <h2 class="transition" >Kasi' Group</h2>
+                <h2 class="transition" ></h2>
                 <p> Instructor:</p>
                 <br />
                 <p> TimeStamps:</p>
@@ -255,7 +269,9 @@
                     </div>
                     <!--<a href="#" class="cta">Join the group</a>-->
                 </div>
-                <div class="card_circle transition"></div>
+                <div class="card_circle transition">
+
+                </div>
 
             </div>
         </div>
@@ -267,7 +283,7 @@
 
 <br>
 <br> <br> <br> <br> <br>
-<hr style="height:10px;border:none;border-top:10px groove skyblue;" />
+<hr style="height:5px;border:none;border-top:5px groove skyblue;" />
 <br>
 
 <br>
@@ -286,13 +302,18 @@ Preapared By Jinhuan Lei
                     for(var x=0; x<3;x++)
                     {
                         var eleH=$("#discussion"+(x+1)+"  h2");
-//                        $('#groupname'+(x+1)).html(data[x].discussioname);
+//                        var eleB= $(".card_circle transition");
                         var eleP=$("#discussion"+(x+1)+" p");
-                        //eleH.text(data[x].discussioname);
+//                        eleB.background="url('http://lorempixel.com/400/200/cat')";
+                        var a1= document.createElement("a");
 
-                        eleH[0].innerHTML=data[x].discussionname;
+                        a1.href="/TurnToDiscussionPage?discussion="+data[x].discussionname;
+                        a1.innerHTML=data[x].discussionname;
+                        eleH[0].appendChild(a1);
                         eleP[0].innerHTML="Instructor: "+data[x].instructor;
                         eleP[1].innerHTML="TimeStamps: "+data[x].date;
+
+                        eleH.trigger("create");
                     }
 //                    var eleH=$("#service1 h2");
 //                    var eleP=$("#service1 p");
@@ -315,7 +336,7 @@ Preapared By Jinhuan Lei
         var li4=document.getElementById("li4");
         var li5=document.getElementById("li5");
         var li6=document.getElementById("li6");
-         li3.style.display="none";
+        li3.style.display="none";
         li4.style.display="none";
         li5.style.display="none";
         li6.style.display="none";

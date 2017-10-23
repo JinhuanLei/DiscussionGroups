@@ -62,11 +62,11 @@
     <style>
         @font-face {
             font-family: 'iconfont';  /* project id 444600 */
-            src: url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.eot');
-            src: url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.eot?#iefix') format('embedded-opentype'),
-            url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.woff') format('woff'),
-            url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.ttf') format('truetype'),
-            url('//at.alicdn.com/t/font_444600_8mribyve7ugzaor.svg#iconfont') format('svg');
+            src: url('//at.alicdn.com/t/font_444600_k3gt73afnx4aq0k9.eot');
+            src: url('//at.alicdn.com/t/font_444600_k3gt73afnx4aq0k9.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_444600_k3gt73afnx4aq0k9.woff') format('woff'),
+            url('//at.alicdn.com/t/font_444600_k3gt73afnx4aq0k9.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_444600_k3gt73afnx4aq0k9.svg#iconfont') format('svg');
         }
 
         .iconfont {
