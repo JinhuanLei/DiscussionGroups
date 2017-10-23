@@ -82,7 +82,7 @@
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container-fluid">
 
-                <a href="index.html" class="navbar-brand"><img src="images/Logo.png" alt=""></a>
+                <a href="/TurnToMainPage" class="navbar-brand"><img src="images/Logo.png" alt=""></a>
 
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <header class="navbar-header">

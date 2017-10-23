@@ -3,9 +3,11 @@ package controller;
 import domain.account;
 import domain.discussion;
 import domain.entry;
+import domain.subscribe;
 import mapping.AccountMapperI;
 import mapping.DiscussionMapperI;
 import mapping.EntryMapperI;
+import mapping.SubscribeMapperI;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +57,51 @@ public class UserController {
 //        return "mainInterfaceJsp";
 //        return "/index.jsp";
     }
+    @RequestMapping(value = "/OnSubscribe")
+    public void onSubscribe(String discussion,String username,PrintWriter pw)
+    {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+        SubscribeMapperI mapper = sqlSession.getMapper(SubscribeMapperI.class);
+        subscribe ss=new subscribe();
+        ss.setDiscussion(discussion);
+        ss.setUsername(username);
+        int x=mapper.add(ss);
+        pw.write("success");
+    }
+    @RequestMapping(value = "/CheckOutSubscribe" )
+    public void checkOutSubscribe(String discussion,String username,PrintWriter pw)
+    {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+        SubscribeMapperI mapper = sqlSession.getMapper(SubscribeMapperI.class);
+       subscribe ss=mapper.getByUsername(username);
+        System.out.println(ss.getDiscussion());
+        System.out.println(discussion);
+        System.out.println("..........................."+ss.getDiscussion()==discussion);
+       if(ss!=null&&ss.getDiscussion().equals(discussion))
+       {
+String x="s";
+               pw.write(x);
 
+       }
+       else {
+           String x="f";
+           pw.write(x);
+       }
+
+
+    }
+    @RequestMapping(value = "/OffSubscribe")
+    public void offSubscribe(String discussion,String username,PrintWriter pw)
+    {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+        SubscribeMapperI mapper = sqlSession.getMapper(SubscribeMapperI.class);
+
+        int x=mapper.deleteByName(username);
+        pw.write("success");
+    }
     @RequestMapping(value = "/LoadEntryData", method = RequestMethod.POST)
     public @ResponseBody List<entry> loadEntryData(String discussion)
     {

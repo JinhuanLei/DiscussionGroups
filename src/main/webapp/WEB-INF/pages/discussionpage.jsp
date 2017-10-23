@@ -454,6 +454,27 @@
         li6.style.display="none";
         console.log("username"+username+"usertype"+type);
 
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/CheckOutSubscribe" ,
+                data: "discussion="+"${discussion}"+"&username="+username,
+                dataType: "text" ,
+                success: function (data)
+                {
+                    if(data=="s")
+                    {
+                        b2.style.display="block";
+                        b1.style.display="none";
+                    }
+                    else
+                    {
+                        b1.style.display="block";
+                        b2.style.display="none";
+                    }
+                }
+            })
+
         if (username!="null")
         {
             var presentType= document.getElementById("li"+type);
@@ -490,12 +511,36 @@
         var b2=document.getElementById("b2");
         b1.style.display="none";
         b2.style.display="block";
+        var username="<%=session.getAttribute("username")%>";
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/OnSubscribe" ,
+                data: "discussion="+"${discussion}"+"&username="+username,
+                dataType: "text" ,
+                success: function (data)
+                {
+                    toastr.success('Join Success');
+                }
+            })
     }
     function Offsubscribe() {
         var b1=document.getElementById("b1");
         var b2=document.getElementById("b2");
         b2.style.display="none";
         b1.style.display="block";
+        var username="<%=session.getAttribute("username")%>";
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/OffSubscribe" ,
+                data: "discussion="+"${discussion}"+"&username="+username,
+                dataType: "text" ,
+                success: function (data)
+                {
+                    toastr.success('Cancel Success');
+                }
+            })
     }
 </script>
 </body>
