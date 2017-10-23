@@ -70,7 +70,7 @@ public class UserController {
         pw.write("success");
     }
     @RequestMapping(value = "/CheckOutSubscribe" )
-    public void checkOutSubscribe(String discussion,String username,PrintWriter pw)
+    public void checkOutSubscribe(HttpSession hs,String discussion,String username,PrintWriter pw)
     {
         SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
         // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
@@ -79,9 +79,10 @@ public class UserController {
         System.out.println(ss.getDiscussion());
         System.out.println(discussion);
         System.out.println("..........................."+ss.getDiscussion()==discussion);
+        hs.setAttribute("username",username);
        if(ss!=null&&ss.getDiscussion().equals(discussion))
        {
-String x="s";
+        String x="s";
                pw.write(x);
 
        }
@@ -116,7 +117,7 @@ String x="s";
 
 
     @RequestMapping(value = "/CreateEntry", method = RequestMethod.POST)
-    public String createEntry(@RequestParam(value="file",required=false) MultipartFile file,@RequestParam("discussion") String discussion, @RequestParam("username") String username,
+    public ModelAndView createEntry(@RequestParam(value="file",required=false) MultipartFile file,@RequestParam("discussion") String discussion, @RequestParam("username") String username,
                               HttpServletRequest request)
 {
 
@@ -153,7 +154,8 @@ String x="s";
     ey.setImagepath(path);
     ey.setUsername(username);
 int x=mapper.add(ey);
-    return "discussionpage";
+   // return new ModelAndView("discussionpage?discussion="+discussion+"&username="+username);
+    return new ModelAndView("discussionpage");
 }
 
     public String getCurrentDate()
