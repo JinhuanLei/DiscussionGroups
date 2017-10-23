@@ -2,7 +2,9 @@ package controller;
 
 
 import domain.discussion;
+import domain.entry;
 import mapping.DiscussionMapperI;
+import mapping.EntryMapperI;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +28,26 @@ public class InstructorController {
  return new ModelAndView("dashboard");
    }
 
+    @RequestMapping(value = "/DeteteEntry")
+    public void deteteEntry(String entryid,PrintWriter pw)
+    {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+       EntryMapperI mapper = sqlSession.getMapper(EntryMapperI.class);
+       int i=Integer.parseInt(entryid);
+       int x=mapper.deleteById(i);
+       pw.write("success");
+    }
+    @RequestMapping(value = "/DeteteDiscussion")
+    public void deteteDiscussion(String discussionname,PrintWriter pw)
+    {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+        DiscussionMapperI mapper = sqlSession.getMapper(DiscussionMapperI.class);
 
+        int x=mapper.deleteByName(discussionname);
+        pw.write("success");
+    }
     @RequestMapping(value = "/GetAllDiscussionByInstructor", method = RequestMethod.POST)
     public @ResponseBody List<discussion> getAllDiscussionByInstructor(String username)
     {
@@ -42,7 +63,21 @@ public class InstructorController {
 
 
     }
+    @RequestMapping(value = "/GetAllEntry", method = RequestMethod.POST)
+    public @ResponseBody List<entry> getAllDiscussionByInstructor()
+    {
+        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+        // 得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+        EntryMapperI mapper = sqlSession.getMapper(EntryMapperI.class);
 
+        List<entry> ser=mapper.getAllEntry();
+
+        sqlSession.close();
+        return ser;
+
+
+
+    }
 
 public String getCurrentDate()
 {

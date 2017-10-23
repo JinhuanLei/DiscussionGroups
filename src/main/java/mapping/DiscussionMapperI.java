@@ -1,6 +1,7 @@
 package mapping;
 
 import domain.discussion;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,6 +17,11 @@ public interface DiscussionMapperI {
     @Select("select * from discussion where instructor=#{instructor}")
     public List<discussion> getDiscussionsByInstructor(String instructor);
 
+    @Select("select * from discussion where discussionname=#{discussionname}")
+    public discussion getDiscussionsByDiscussionname(String discussionname);
+
+    @Delete("delete from discussion where discussionname=#{discussionname}")
+    public int deleteByName(String discussionname);
 
 @Select("select count(*) from discussion")
     public int getAcountFromDiscussion();

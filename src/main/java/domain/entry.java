@@ -1,12 +1,21 @@
 package domain;
 
 public class entry {
-    private int entry;
+    private int entryid;
     private String username;
     private String entryname;
     private String discussion;
     private String date;
     private String entryinfer;
+private String imagepath;
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
 
     public String getUsername() {
         return username;
@@ -32,15 +41,13 @@ public class entry {
         this.entryinfer = entryinfer;
     }
 
-    public int getEntry() {
-        return entry;
+    public int getEntryid() {
+        return entryid;
     }
 
-    public void setEntry(int entry) {
-        this.entry = entry;
+    public void setEntryid(int entryid) {
+        this.entryid = entryid;
     }
-
-
 
     public String getEntryname() {
         return entryname;

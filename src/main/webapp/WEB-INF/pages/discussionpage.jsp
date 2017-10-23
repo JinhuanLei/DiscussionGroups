@@ -1,5 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    request.setAttribute("basePath", basePath);
+%>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +17,35 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-
+    <link href="css/addpicture.css" rel="stylesheet">
     <link href="css/timeline.css" rel="stylesheet">
 
+    <link href="build/toastr.css" rel="stylesheet"/>
+    <style>
+
+        @font-face {
+            font-family: 'iconfont';  /* project id 444600 */
+            src: url('//at.alicdn.com/t/font_444600_wloo5a11rr7ldi.eot');
+            src: url('//at.alicdn.com/t/font_444600_wloo5a11rr7ldi.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_444600_wloo5a11rr7ldi.woff') format('woff'),
+            url('//at.alicdn.com/t/font_444600_wloo5a11rr7ldi.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_444600_wloo5a11rr7ldi.svg#iconfont') format('svg');
+        }
+
+
+        .iconfont {
+            font-family: "iconfont";
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
+            padding-left: 0;
+
+        }
+
+
+    </style>
 </head>
 
 <body>
@@ -26,7 +58,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">UWL Discussion Group</a>
+            <a class="navbar-brand" href="/TurnToMainPage">UWL Discussion Group</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li id="li3"><a href="#">Instructor</a></li>
+                <li id="li4"><a href="#">Beginner</a></li>
+                <li id="li5"><a href="#">Intermediate User</a></li>
+                <li id="li6"><a href="#">Expert User</a></li>
+            </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <div id="downbar">
@@ -34,12 +74,12 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a id="action-1" href="#">Manager</a>
+                            <li id="manageli">
+                                <a id="action-1" href="/TurnToManagePage">Manage Discussion</a>
                             </li>
 
                             <li>
-                                <a href="#">Setting</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal">Account Information</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -51,7 +91,7 @@
                 </ul>
             </div>
             <div id="submitform">
-                <form class="navbar-form navbar-right" id="loginButton" action="/maintoindex">
+                <form class="navbar-form navbar-right" id="loginButton" action="/TurnToLoginPage">
 
                     <button type="submit" class="btn btn-success">Sign in</button>
 
@@ -59,296 +99,405 @@
             </div>
         </div>
 
-
     </div>
 </nav>
 
-<div class="container">
+<div class="container" id="discussioncontent">
     <div class="row">
-        <h2>Time Line</h2>
+        <br /><br /><br />
+
+        <h2>Discussion name</h2>
+
+        <p>Created by: </p>
+        <p>Topic:</p>
+        <p>Timestamp:</p>
+        <hr style="height:5px;border:none;border-top:5px groove skyblue;" />
+        <div class="btn-group">
+
+            <a  class="btn btn-success " title="Join our group" id="b1" onclick="Onsubscribe()"><i class="iconfont">&#xe602;</i></a>
+            <a  class="btn btn btn-danger " title="Quit the group" id="b2" onclick="Offsubscribe()"><i class="iconfont">&#xe625;</i></a>
+            <a href="#" class="btn btn-warning " data-toggle="modal" title="Add an entry" data-target="#createEntryModal" id="b3"><i class="iconfont">&#xe601;</i></a>
+        </div>
     </div>
+
+    <!-- line modal -->
+    <div class="modal fade" id="createEntryModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title" id="lineModalLabel">My Entry</h3>
+                </div>
+                <div class="modal-body">
+
+                    <!-- content goes here -->
+                    <form action="/CreateEntry?discussion=${discussion}&username="+${sessionScope[username]} method="post" enctype="multipart/form-data" id="entryform">
+                        <div class="form-group">
+                            <label for="entrytitle">Entry Title</label>
+                            <input type="text" class="form-control" id="entrytitle" name="entrytitle" >
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="exampleInputPassword1"></label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter Entry Content">
+                        </div>-->
+                        <div class="form-group">
+                            <label for="entryinfer" class="control-label ">Entry Content</label>
+
+                            <textarea id="entryinfer" class="form-control" name="entryinfer"></textarea>
+
+                        </div>
+
+
+
+                        <legend>Add Images</legend>
+                        <div class="entryimg"  id="entryimg">
+
+                            <!-- image-preview-filename input [CUT FROM HERE]-->
+                            <div class="input-group image-preview">
+                                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                <span class="input-group-btn">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                        <span class="glyphicon glyphicon-remove"></span> Clear
+                    </button>
+                                    <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input">
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                        <span class="image-preview-input-title">Browse</span>
+                        <input type="file" accept="image/png, image/jpeg, image/gif" name="file"/> <!-- rename it -->
+                    </div>
+                </span>
+                            </div>
+
+                        </div>
+                        <br />
+                        <input type="reset" class="btn btn-danger" data-dismiss="modal" value="Close"/>
+                        <input type="submit" class="btn btn-primary" value="Post Entry"/>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="qa-message-list" id="wallmessages">
-        <div class="message-item" id="m167">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko"><img src="http://lorempixel.com/64/64"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">Oleg Kolesnichenko</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Jan 21</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">Oleg Kolesnichenko</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Yo!
-                </div>
-            </div></div>
+        <br><hr>
+<%--<div>--%>
+    <%--<p> entry name</p>--%>
+    <%--<p> username+ timestamp </p>--%>
 
-        <div class="message-item" id="m162">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko"><img src="http://lorempixel.com/64/64"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">Oleg Kolesnichenko</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Jan 21</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">Oleg Kolesnichenko</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Yo!
-                </div>
-            </div></div>
-        <div class="message-item" id="m16">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko"><img src="http://lorempixel.com/64/64"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">Oleg Kolesnichenko</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Jan 21</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">Oleg Kolesnichenko</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Yo!
-                </div>
-            </div></div>
+    <%--<p> entry infer</p>--%>
+    <%--<hr>--%>
+<%--</div>--%>
+        <%--<div class="message-item" id="m162">--%>
+            <%--<div class="message-inner">--%>
+                <%--<div class="message-head clearfix">--%>
+                    <%--<div class="avatar pull-left">--%>
+                        <%--<a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko"><img src="http://lorempixel.com/64/64"></a>--%>
+                    <%--</div>--%>
+                    <%--<div class="user-detail">--%>
+                        <%--<h5 class="handle">Oleg Kolesnichenko</h5>--%>
+                        <%--<div class="post-meta">--%>
+                            <%--<div class="asker-meta">--%>
+                                <%--<span class="qa-message-what"></span>--%>
+                                <%--<span class="qa-message-when">--%>
+												<%--<span class="qa-message-when-data">Jan 21</span>--%>
+										<%--</span>--%>
+                                <%--<span class="qa-message-who">--%>
+												<%--<span class="qa-message-who-pad">by </span>--%>
+										<%--<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">Oleg Kolesnichenko</a></span>--%>
+										<%--</span>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="qa-message-content">--%>
+                    <%--Yo!--%>
+                    <%--<br>--%>
+                    <%--<img src="http://lorempixel.com/64/64">--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
 
-        <div class="message-item" id="m9">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=amiya"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">amiya</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Nov 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=amiya">amiya</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Nice theme . Excellent one .
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m7">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=russell"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">russell</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 25, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=russell">russell</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Nullam porta leo vitae ipsum feugiat viverra. In sed placerat mi. Nullam euismod, quam in euismod rhoncus, tellus velit posuere tortor, non cursus nunc velit et lacus.
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m6">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=juggornot"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">juggornot</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=juggornot">juggornot</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Integer vitae arcu vitae ligula Cras vestibulum suscipit odio ac dapibus. In hac habitasse platea dictumst. Cras pulvinar erat et nunc fringilla, quis molestie
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m5">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=one_eyed"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">one_eyed</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=one_eyed">one_eyed</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Nulla dui ante, pulvinar ac auctor vitae, sollicitudin et tortor. Cras vestibulum suscipit odio ac dapibus. In hac habitasse platea dictumst. Cras pulvinar erat et nunc fringilla, quis molestie diam pulvinar.
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m4">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=muboy"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">muboy</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=muboy">muboy</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fermentum iaculis mi, non dapibus nulla eleifend sed. Etiam ac commodo leo. <br>
-                    Donec non sem id tellus mattis convallis. Morbi dapibus nulla ac dui lacinia,
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m3">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=monu"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">monu</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=monu">monu</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Suspendisse varius mi consectetur nulla volutpat, nec fermentum turpis vehicula. Curabitur dapibus odio mauris, vitae accumsan sapien auctor non. Duis tempus ante id nulla vestibulum mattis.
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m2">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=Fynn"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">Fynn</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Fynn">Fynn</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Nunc ante neque, feugiat at dictum ut, dignissim sed sapien. Pellentesque congue eu nisl sit amet cursus. Integer dapibus adipiscing metus ac vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-            </div></div>
-
-        <div class="message-item" id="m1">
-            <div class="message-inner">
-                <div class="message-head clearfix">
-                    <div class="avatar pull-left"><a href="./index.php?qa=user&qa_1=admin"><img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"></a></div>
-                    <div class="user-detail">
-                        <h5 class="handle">admin</h5>
-                        <div class="post-meta">
-                            <div class="asker-meta">
-                                <span class="qa-message-what"></span>
-                                <span class="qa-message-when">
-												<span class="qa-message-when-data">Oct 24, 2013</span>
-											</span>
-                                <span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=admin">admin</a></span>
-											</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="qa-message-content">
-                    Nunc ante neque, feugiat at dictum ut, dignissim sed sapien. Pellentesque congue eu nisl sit amet cursus. Integer dapibus adipiscing metus ac vehicula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fermentum iaculis mi, non dapibus nulla eleifend sed. Etiam ac commodo leo. Donec non sem id tellus mattis convallis. Morbi dapibus nulla ac dui lacinia,
-                </div>
-            </div></div>
 
     </div>
 </div>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/autosize.js/1.18.17/jquery.autosize.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="build/toastr.min.js"></script>
+<script type="text/html" id="theTemplate">
+    <br>
+    <br>
+    <div class="message-item id=m344">
+        <div class="message-inner">
+            <div class="message-head clearfix">
+                <div class="avatar pull-left">
+                    <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko"><img src="http://lorempixel.com/64/64"></a>
+                </div>
+                <div class="user-detail">
+                    <h5 class="handle">Oleg Kolesnichenko</h5>
+                    <div class="post-meta">
+                        <div class="asker-meta">
+                            <span class="qa-message-what"></span>
+                            <span class="qa-message-when">
+												<span class="qa-message-when-data">Jan 21</span>
+										</span>
+                            <span class="qa-message-who">
+												<span class="qa-message-who-pad">by </span>
+										<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">Oleg Kolesnichenko</a></span>
+										</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="qa-message-content">
+                Yo!
+                <br>
+                <img src="">
+            </div>
+        </div>
+    </div>
+    </script>
+<script>
+    $(document).on('click', '#close-preview', function(){
+        $('.image-preview').popover('hide');
+        // Hover befor close the preview
+        $('.image-preview').hover(
+            function () {
+                $('.image-preview').popover('show');
+            },
+            function () {
+                $('.image-preview').popover('hide');
+            }
+        );
+    });
+
+    $(function() {
+        // Create the close button
+        var closebtn = $('<button/>', {
+            type:"button",
+            text: 'x',
+            id: 'close-preview',
+            style: 'font-size: initial;',
+        });
+        closebtn.attr("class","close pull-right");
+        // Set the popover default content
+        $('.image-preview').popover({
+            trigger:'manual',
+            html:true,
+            title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+            content: "There's no image",
+            placement:'bottom'
+        });
+        // Clear event
+        $('.image-preview-clear').click(function(){
+            $('.image-preview').attr("data-content","").popover('hide');
+            $('.image-preview-filename').val("");
+            $('.image-preview-clear').hide();
+            $('.image-preview-input input:file').val("");
+            $(".image-preview-input-title").text("Browse");
+        });
+        // Create the preview image
+        $(".image-preview-input input:file").change(function (){
+            var img = $('<img/>', {
+                id: 'dynamic',
+                width:250,
+                height:200
+            });
+            var file = this.files[0];
+            var reader = new FileReader();
+            // Set preview image into the popover data-content
+            reader.onload = function (e) {
+                $(".image-preview-input-title").text("Change");
+                $(".image-preview-clear").show();
+                $(".image-preview-filename").val(file.name);
+                img.attr('src', e.target.result);
+                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+            }
+            reader.readAsDataURL(file);
+
+        });
+
+
+        //self
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/LoadSpecificDiscussionData" ,
+                data: "discussion="+"${discussion}",
+                dataType: "text" ,
+                success: function (data)
+                {
+//                 alert(data);
+                    var dataObj=eval("("+data+")");    //sb bug
+//                 alert(dataObj.discussionname);
+                    var eleH=$("#discussioncontent h2");
+                    var eleP=$("#discussioncontent p");
+                    eleH[0].innerHTML=dataObj.discussionname;
+                    eleP[0].append(dataObj.instructor);
+                    eleP[1].append(dataObj.topic);
+                    eleP[2].append(dataObj.date);
+                }
+            })
+
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/LoadEntryData" ,
+                data: "discussion="+"${discussion}",
+                dataType: "text" ,
+                success: function (data)
+                {
+                    var parent = document.getElementById("wallmessages");
+
+
+                    var dataObj=eval("("+data+")");
+                    var count = Object.keys(dataObj).length;
+//                alert(count);
+                  for(var x=0;x<count;x++)
+                    {
+//                        var eleH=$("#theTemplate h5");
+//                        var template = document.getElementById("theTemplate");
+//                     template.innerHTML.getElementsByTagName("h5")[0].innerHTML=dataObj[x].entryname;
+//
+//                      wallmessages.insertAdjacentHTML("afterBegin",template.innerHTML);
+                      var dialog = document.createElement('div');
+                      if(dataObj[x].imagepath!=null)
+                      {
+                          var img=document.createElement("img");
+                          img.src="${basePath}"+dataObj[x].imagepath;
+//                          img.style.cssText="width:150px;height:200px;";
+                      }
+
+                      var p1= document.createElement("p");
+
+                      p1.innerHTML=dataObj[x].entryname;
+                      console.log(dataObj[x].entryname);
+                      var p2= document.createElement("p");
+                      p2.innerHTML=dataObj[x].username +" created at "+dataObj[x].date;
+
+                      var p3= document.createElement("p");
+                      p3.innerHTML=dataObj[x].entryinfer;
+                      var hr=document.createElement("hr");
+                      dialog.appendChild(p1);
+                      dialog.appendChild(p2);
+                      dialog.appendChild(p3);
+                      dialog.appendChild(img);
+                      dialog.appendChild(hr);
+
+                      parent.appendChild(dialog);
+                  }
+
+                }
+            })
+
+    });
+</script>
+<script>
+    toastr.options.positionClass = 'toast-top-center';
+
+
+
+    //    function AddEntry() {
+    //        var path= '';
+    //        var entrytitle =document.getElementById("entrytitle").value;
+    //        var entryinfer =document.getElementById("entryinfer").value;
+    //        var entryinfer=document.getElementsByName("images");
+    //
+    //        entryinfer[0].select();
+    //        path = document.selection.createRange().text;
+    //        document.selection.empty();
+    //        alert(path);
+    //        $.ajax(
+    //            {
+    //                type: "POST" ,
+    //                url: "/LoadDiscussionData" ,
+    //                success: function (data)
+    //                {
+    //
+    //
+    //                }
+    //            })
+    //    }
+
+    $(document).ready(function() {
+
+
+        var username="<%=session.getAttribute("username")%>";
+        var type="<%=session.getAttribute("usertype")%>";   //判断是否是admin 管理员 或user
+        var typename="<%=session.getAttribute("usertypename")%>";
+        var navbar=document.getElementById("downbar");
+        var loginbutton=document.getElementById("submitform");
+        var manageAutho=document.getElementById("manageli");
+
+        var li3=document.getElementById("li3");
+        var li4=document.getElementById("li4");
+        var li5=document.getElementById("li5");
+        var li6=document.getElementById("li6");
+        var b1=document.getElementById("b1");
+        var b2=document.getElementById("b2");
+        var b3=document.getElementById("b3");
+        var div1=document.getElementById("entryimg");
+        div1.style.display="none";
+        b2.style.display="none";
+        b3.style.display="none";
+        li3.style.display="none";
+        li4.style.display="none";
+        li5.style.display="none";
+        li6.style.display="none";
+        console.log("username"+username+"usertype"+type);
+
+        if (username!="null")
+        {
+            var presentType= document.getElementById("li"+type);
+            presentType.style.display="block";
+            navbar.style.display="block";
+            loginbutton.style.display="none";
+           b3.style.display="block";
+           if(type==3||type==6)
+           {
+               div1.style.display="block";
+           }
+        }
+        else
+        {
+
+            navbar.style.display="none";
+            loginbutton.style.display="block";
+        }
+
+        if(type==3)
+        {
+            manageAutho.style.display="block";
+
+        }
+        else
+        {
+            manageAutho.style.display="none";
+        }
+
+    })
+
+    function Onsubscribe() {
+        var b1=document.getElementById("b1");
+        var b2=document.getElementById("b2");
+        b1.style.display="none";
+        b2.style.display="block";
+    }
+    function Offsubscribe() {
+        var b1=document.getElementById("b1");
+        var b2=document.getElementById("b2");
+        b2.style.display="none";
+        b1.style.display="block";
+    }
+</script>
 </body>
 
 </html>

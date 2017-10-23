@@ -70,6 +70,7 @@
     </script>
     <link rel="stylesheet" href="assets/css/style-switcher.css">
     <link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
+    <link href="build/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.js"></script>
 
 </head>
@@ -202,7 +203,7 @@
                         <div class="box">
                             <header>
                                 <div class="icons"><i class="fa fa-table"></i></div>
-                                <h5>Dynamic Table</h5>
+                                <h5>Discussion Table</h5>
                             </header>
                             <div id="collapse4" class="body">
                                 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
@@ -225,6 +226,42 @@
                                         <%--<td>John Doe</td>--%>
                                         <%--<td>Science</td>--%>
                                         <%--<td>2017</td>--%>
+                                    <%--</tr>--%>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="box">
+                            <header>
+                                <div class="icons"><i class="fa fa-table"></i></div>
+                                <h5>Entry Table</h5>
+                            </header>
+                            <div id="collapse5" class="body">
+                                <table id="stripedTable" class="table table-bordered table-condensed table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th ><i class="iconfont">&#xe607;</i></th>
+                                        <th>Entryid</th>
+                                        <th>Username</th>
+                                        <th>Entryname</th>
+                                        <th>Discussion</th>
+                                        <th>Date</th>
+                                        <th>Entryinfer</th>>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="entryTable">
+                                    <%--<tr>--%>
+                                    <%--<td align="center">--%>
+                                    <%--<a class="btn btn-default"><i class="iconfont">&#xe624;</i></a>--%>
+                                    <%--<a class="btn btn-danger"><i class="iconfont">&#xe600;</i></a>--%>
+                                    <%--</td>--%>
+                                    <%--<td class="hidden-xs">1</td>--%>
+                                    <%--<td>John Doe</td>--%>
+                                    <%--<td>Science</td>--%>
+                                    <%--<td>2017</td>--%>
                                     <%--</tr>--%>
                                     </tbody>
                                     </tbody>
@@ -295,7 +332,42 @@
 <script src="assets/js/core.js"></script>
 <!-- Metis demo scripts -->
 <script src="assets/js/app.js"></script>
+<script src="build/toastr.min.js"></script>
+<script>
+    toastr.options.positionClass = 'toast-top-center';
+    function deleteEntry(thisObj,idcount)
+    {
+        var entryid=document.getElementById("entryid"+idcount).innerText;
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/DeteteEntry" ,
+                data: "entryid=" +entryid,
+                success: function (data)
+                {
+                    toastr.success('Delete Success');
+                    setTimeout(function(){window.location.href="/TurnToManagePage";},2000);
+                }
+            })
 
+    }
+    function deleteDiscussion(thisObj,idcount)
+    {
+        var discussionname=document.getElementById("discussionname"+idcount).innerText;
+        $.ajax(
+            {
+                type: "POST" ,
+                url: "/DeteteDiscussion" ,
+                data: "discussionname=" +discussionname,
+                success: function (data)
+                {
+                    toastr.success('Delete Success');
+                    setTimeout(function(){window.location.href="/TurnToManagePage";},2000);
+                }
+            })
+
+    }
+</script>
 <script>
     $(function() {
 
@@ -328,6 +400,7 @@
                                 var i1= document.createElement("i");
                                 var a2= document.createElement("a");
                                 var i2= document.createElement("i");
+                                a2.setAttribute("onclick", "deleteDiscussion(this,"+x+")");
                                  a1.title="Terminate";
                                 a2.title="Delete";
                                  a1.className='btn btn-default';
@@ -354,7 +427,7 @@
                             }
                             else if (y == 1) {
                                 var td1 = document.createElement("td"); //创建单元格
-
+                                td1.id='discussionname'+x;
                                 td1.appendChild(document.createTextNode(data[x].discussionname)); //为单元格添加内容
 
                                 row.appendChild(td1); //将单元格添加到行内
@@ -384,15 +457,120 @@
                         }
                         document.getElementById("discussionTable").append(row); //将行添加到<tbody>中
                     }
+//                    $('#dataTable1').dataTable( {
+//                        paging: ture,
+//                        searching: ture
+//                    } );
                     Metis.MetisTable();
                     Metis.metisSortable();
                 }
             })
 
+        $.ajax(
+            {
+                type: "POST",
+                url: "/GetAllEntry",
+//                data: "username=" + username,
+                success: function (data) {
 
+                    var count = Object.keys(data).length;  //传过来数据长度
+                    console.log("数据长度:  " + count);
+                    for (var x = 0; x < count; x++) {
+                        var row = document.createElement("tr"); //创建行
+
+                        for (var y = 0; y < 7; y++) {
+                            if (y == 0) {
+                                var td1 = document.createElement("td"); //创建单元格
+                                td1.align="center";
+                                var a1= document.createElement("a");
+                                var i1= document.createElement("i");
+                                var a2= document.createElement("a");
+                                var i2= document.createElement("i");
+                                a1.title="Terminate";
+                                a2.title="Delete";
+                                a2.setAttribute("onclick", "deleteEntry(this,"+x+")");
+                                a1.className='btn btn-default';
+                                a2.className='btn btn-danger';
+
+                                i1.className='iconfont';
+                                i2.className='iconfont';
+                                a1.appendChild(i1);
+                                a2.appendChild(i2);
+                                // i1.appendChild(document.createTextNode("&#xe624;"));
+                                i1.innerHTML="&#xe6e1";
+                                i2.innerHTML="&#xe600";
+
+                                //i2.appendChild(document.createTextNode("&#xe600;"));
+//                                $("#discussionTable").trigger("create");//为单元格添加内容
+//                                var a1=' <a class="btn btn-default"><i class="iconfont">&#xe624;</i></a>';
+//                                var a2='<a class="btn btn-dange"><i class="iconfont">&#xe600;</i></a>';
+
+                                td1.appendChild(a1);
+                                td1.append(" ");
+                                td1.appendChild(a2);
+
+                                row.appendChild(td1); //将单元格添加到行内
+
+                            }
+                            else if (y == 1) {
+                                var td1 = document.createElement("td"); //创建单元格
+                                        td1.id='entryid'+x;
+                                td1.appendChild(document.createTextNode(data[x].entryid)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 2) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].username)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 3) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].entryname)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 4) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].discussion)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 5) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].date)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+                            else if (y == 6) {
+                                var td1 = document.createElement("td"); //创建单元格
+
+                                td1.appendChild(document.createTextNode(data[x].entryinfer)); //为单元格添加内容
+
+                                row.appendChild(td1); //将单元格添加到行内
+                            }
+
+                        }
+                        document.getElementById("entryTable").append(row); //将行添加到<tbody>中
+                    }
+//                    Metis.MetisTable();
+//                    Metis.metisSortable();
+//                    $('#dataTable2').dataTable( {
+//                        paging: ture,
+//                        searching: ture
+//                    } );
+                }
+            })
 
 
     });
+
+
 </script>
 
 <script src="assets/js/style-switcher.js"></script>

@@ -29,6 +29,7 @@
         <mapper class="mapping.AccountMapperI"/>
         <mapper class="mapping.DiscussionMapperI"/>
         <mapper class="mapping.EntryMapperI"/>
+        <mapper class="mapping.SubscribeMapperI"/>
        
     </mappers>
 
